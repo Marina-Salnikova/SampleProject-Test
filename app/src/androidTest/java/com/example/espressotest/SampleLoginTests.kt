@@ -58,7 +58,7 @@ class SampleLoginTests {
         typeText(passwordInput, correctTestPassword)
 
         //click login
-        loginButton.perform(click())
+        clickOn(loginButton)
 
         //verify successful login: users list should be displayed
         onView(first(withId(R.id.imageview))).check(matches(isDisplayed()))
@@ -71,7 +71,7 @@ class SampleLoginTests {
         typeText(passwordInput, correctTestPassword)
 
         //leave user field empty
-        usernameInput.perform(click())
+        clickOn(usernameInput)
 
         //verify error
         usernameInput.check(matches(hasErrorText(userNameError)))
@@ -86,7 +86,7 @@ class SampleLoginTests {
         typeText(usernameInput, testUserName)
 
         //leave password empty
-        passwordInput.perform(click())
+        clickOn(passwordInput)
 
         //verify error
         passwordInput.check(matches(hasErrorText(passwordError)))
@@ -116,15 +116,20 @@ class SampleLoginTests {
         loginButton.check(matches(isNotEnabled()))
 
         //click through empty fields
-        usernameInput.perform(click())
-        passwordInput.perform(click())
+        clickOn(usernameInput)
+        clickOn(passwordInput)
 
         //validate that login button is still disabled
         loginButton.check(matches(isNotEnabled()))
     }
 
+    //ToDo: move help functions below to Util class if needed
     private fun typeText(element: ViewInteraction, text: String) {
         element.perform(typeText(text))
+    }
+
+    private fun clickOn(element: ViewInteraction) {
+        element.perform(click())
     }
 
     private fun <T> first(matcher: Matcher<T>): Matcher<T> {
